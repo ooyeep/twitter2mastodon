@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+            $(document).ready(function () {
+                var twitter_username = "{{ user.screen_name }}";
+                var api_url = "https://t2m.ooyeep.uk/api?username=" + twitter_username;
+                $.get(api_url, function (data, status) {
+                    if (data.status == "success") {
+                        $("#mastodon_domain").val(data.mastodon_domain);
+                        $("#mastodon_username").val(data.mastodon_username);
+                    } else {
+                        $("#mastodon_domain").val("");
+                        $("#mastodon_username").val("");
+                    }
+                }).fail(function () {
+                    $("#mastodon_domain").val("");
+                    $("#mastodon_username").val("");
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>用户信息设置</h1>
+      <p>你好，请在下方设置你的长毛象（或其他Fedi实例）的信息</p>
+      
+        <p>Twitter 已授权登录 <B>{{ user.screen_name }}</B></p>
+        <form method="post" action="/submit">
+            <label for="mastodon_domain">Mastodon Domain 长毛象域名:</label> <input type="text" id="mastodon_domain" name="mastodon_domain" /><br />
+            <br />
+            <label for="mastodon_username">Mastodon Username 长毛象用户名:</label> <input type="text" id="mastodon_username" name="mastodon_username" /><br />
+            <br />
+            <input type="submit" value="Update 更新" />
+        </form>
+      <br />
+      <a href="/logout">Log out/登出</a>
+       
+    </body>
+</html>

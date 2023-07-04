@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5001"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CONSUMER_KEY=
+      - CONSUMER_SECRET=
+      - CALLBACK_URL=
+      - APP_SECRET_KEY=
+    restart: always
+    volumes:
+      - ./templates:/app/templates
+    depends_on:
+      - redis
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - ./redis_data:/data
+    command: redis-server
+    restart: always
