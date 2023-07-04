@@ -12,7 +12,9 @@
 
 # Tampermonkey 脚本
 
-那个repo首页上有个`user.js`文件，你打开进去把东西复制一下，然后手动到油猴里面新建一个脚本，添加和安装和启用
+~~那个repo首页上有个`user.js`文件，你打开进去把东西复制一下，然后手动到油猴里面新建一个脚本，添加和安装和启用~~  
+
+[直接到这里安装，勉强能用](https://greasyfork.org/zh-CN/scripts/470141-twitter-to-mastodon-redirector)
 
 'Ctrl + S' 保存文件，保存前可以修改下`HOME_SERVER`到你最常用的mstdn实例。
 
