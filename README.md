@@ -23,6 +23,10 @@
 ```
 [GET] https://t2m.ooyeep.uk/api?username=TWITTER_USERNAME
 ```
+返回示例
+```
+{"mastodon_domain":"nya.one","mastodon_username":"ooyeep","status":"success"}
+```
 
 # 安全性
 
