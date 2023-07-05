@@ -65,6 +65,7 @@ def index():
 
         return render_template('home.html', user=user)
 
+# 提交表单
 @app.route('/submit', methods=['POST'])
 def submit():
     if 'access_token' not in session:
@@ -86,6 +87,21 @@ def submit():
         redis_client.set(twitter_username, f'{mastodon_domain},{mastodon_username}')
 
         return redirect('/')
+
+# 删除已提交的值
+@app.route('/delete')
+def delete():
+    if 'access_token' not in session:
+        return redirect('/')
+    else:
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(session['access_token'], session['access_token_secret'])
+        api = tweepy.API(auth)
+        user = api.verify_credentials()
+
+        redis_client.delete(user.screen_name)
+        return '已删除，稍后生效'
+
 
 # 公共API接口
 @app.route('/api', methods=['GET'])
