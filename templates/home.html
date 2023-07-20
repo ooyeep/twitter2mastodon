@@ -2,8 +2,14 @@
 <html>
     <head>
         <title>Home Page</title>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+        </style>
+        <script>
             $(document).ready(function () {
                 var twitter_username = "{{ user.screen_name }}";
                 var api_url = "https://t2m.ooyeep.uk/api?username=" + twitter_username;
@@ -19,23 +25,38 @@
                     $("#mastodon_domain").val("");
                     $("#mastodon_username").val("");
                 });
+
+                // 添加查询
+                $.get("https://t2m.ooyeep.uk/api/count", function (data, status) {
+                    if (data.count) {
+                        $("#user_count").text(data.count);
+                    }
+                }).fail(function () {
+                    $("#user_count").text("{{N/A}}");
+                });
             });
         </script>
     </head>
     <body>
-        <h1>用户信息设置</h1>
-      <p>你好，请在下方设置你的长毛象（或其他Fedi实例）的信息</p>
-      
-        <p>Twitter 已授权登录 <B>{{ user.screen_name }}</B></p>
-        <form method="post" action="/submit">
-            <label for="mastodon_domain">Mastodon Domain 长毛象域名:</label> <input type="text" id="mastodon_domain" name="mastodon_domain" /><br />
+        <div class="container">
+            <h1 class="text-center">用户信息设置</h1>
+            <p class="text-center">你好，请在下方设置你的长毛象（或其他Fedi实例）的信息</p>
+            <p class="text-center">Twitter 已授权登录 <b>{{ user.screen_name }}</b></p>
+            <form method="post" action="/submit">
+                <div class="mb-3">
+                    <label for="mastodon_domain" class="form-label">Mastodon Domain 长毛象域名:</label>
+                    <input type="text" id="mastodon_domain" name="mastodon_domain" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="mastodon_username" class="form-label">Mastodon Username 长毛象用户名:</label>
+                    <input type="text" id="mastodon_username" name="mastodon_username" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Update 更新</button>
+                <button href="/logout" class="btn btn-default">Log out/登出</button>
+            </form>
             <br />
-            <label for="mastodon_username">Mastodon Username 长毛象用户名:</label> <input type="text" id="mastodon_username" name="mastodon_username" /><br />
-            <br />
-            <input type="submit" value="Update 更新" />
-        </form>
-      <br />
-      <a href="/logout">Log out/登出</a>
-       
+            <!-- 显示已经加入的人数 -->
+            <p class="text-center">已经有 <span id="user_count">{{N/A}}</span> 人加入</p>
+        </div>
     </body>
 </html>
