@@ -113,5 +113,10 @@ def api():
     else:
         return jsonify({'status': 'User Not Found'})
 
+@app.route('/api/count', methods=['GET'])
+def count():
+    count = redis_client.dbsize()
+    return jsonify({'count': count})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5001)
